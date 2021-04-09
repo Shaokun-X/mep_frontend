@@ -1,0 +1,111 @@
+.Main {
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: rgb(0, 0, 0);  
+    text-align: center;
+  
+}
+
+.btn {
+    background-color: #ffffff;
+    border-color: #C8FFE0;
+    color: black;
+
+}
+.btn:hover {
+    background-color: #C8FFE0; 
+    color: #B4DBDC;
+  }
+
+.btn-link{
+    border-color: #ffffff;
+} 
+.btn-link:hover{
+    background-color: transparent;
+}
+
+.custom {
+    margin-top: 10px;
+    width: 100px !important;
+}
+.custom2 {
+    margin-top: 10px;
+    width: 150px !important;
+}
+
+.ballon{
+    position: absolute;
+    top: 0;
+    right: 50px;
+    height: 80%;
+}
+
+.logo{
+    height: 100px;
+    width: 200px;
+}
+
+.phone_view{
+    justify-content: center;
+}
+
+.navbar-brand{
+    width: 400px;
+}
+
+.List{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100px;
+    width: 400px; 
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.ListInstructions{
+    font-size: x-small;
+}
+
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10%;
+}
+
+  @media (max-width: 850px) {
+    .ballon {
+      display: none;
+    }
+    .navbar-brand{
+        width: 125px;
+    }
+ 
+    .logo {
+        height: 75px;
+        width: 125px;   
+    }
+    .prevent_error{
+         margin-top : 100px
+    }
+    .phone_view{
+        flex-direction: column;
+        align-items: center;
+    }
+  }
+
+  @media (max-height: 600px) {
+      .navbar{
+          height: 50px;
+      }
+      
+  }
