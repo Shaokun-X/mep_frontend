@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+ 
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L,E=HTTPS:1]
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+ 
+<Files "index.html">
+    Header add Access-Control-Allow-Origin "*"
+    Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+</Files>
