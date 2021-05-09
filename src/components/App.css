@@ -41,10 +41,7 @@
     margin-top: 10px;
     width: 100px !important;
 }
-.custom2 {
-    margin-top: 10px;
-    width: 150px !important;
-}
+
 
 .ballon{
     position: absolute;
@@ -55,8 +52,8 @@
 }
 
 .logo{
-    height: 100px;
-    width: 200px;
+    height: 80px;
+    object-fit: contain;
 }
 
 .phone_view{
@@ -91,6 +88,31 @@
     margin-bottom: 10%;
 }
 
+.navbarText button {
+    color: rgb(175, 175, 175);
+}
+.navbarText {
+    border-top: dashed lightgray 1px;
+}
+@media (min-width: 992px) {     
+    .navbarText{
+        border: none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .logo {
+        height: 100px;
+    }
+}
+
+.banner {
+    height: 226px;
+    width: 365px;
+    margin: 20px;
+    object-fit: contain;
+}
+
   @media (max-width: 850px) {
     .ballon {
       display: none;
@@ -98,10 +120,11 @@
     .navbar-brand{
         width: 125px;
     }
- 
     .logo {
-        height: 75px;
-        width: 125px;   
+        height: 60px;
+    }
+    .banner {
+        height: 180px;
     }
     .prevent_error{
          margin-top : 100px

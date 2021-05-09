@@ -72,7 +72,7 @@ function App() {
         <img
           src={Logo}
           alt="Logo"
-          style={{ height: "226px", width: "365px", margin: "20px" }}
+          className="banner"
         />
 
         {propos === true ? (
@@ -144,18 +144,18 @@ function App() {
 
         <div className="collapse navbar-collapse" id="navbarText">
           <ul
-            className="navbar-nav d-flex flex-column mx-auto "
+            className="navbar-nav d-flex mx-auto flex-row flex-md-column justify-content-around"
             style={{ fontSize: "12px", alignItems: "center" }}
           >
-            <li>Copyright c 2021</li>
+            <li>Copyright &#169; 2021</li>
             <li>Powered by</li>
             <li>MXCDATA</li>
           </ul>
 
-          <span className="navbarText">
+          <span className="navbarText d-flex justify-content-around mt-sm-4">
             <button
               type="button"
-              className="btn btn-link btn-sm mr-2"
+              className="btn btn-link btn-sm"
               onClick={() =>
                 setPropos(!propos) +
                 setConfidentialite(false) +
@@ -166,7 +166,7 @@ function App() {
             </button>
             <button
               type="button"
-              className="btn btn-link btn-sm mr-2"
+              className="btn btn-link btn-sm"
               onClick={() =>
                 setLegales(!legales) +
                 setPropos(false) +
@@ -177,7 +177,7 @@ function App() {
             </button>
             <button
               type="button"
-              className="btn btn-link btn-sm mr-2"
+              className="btn btn-link btn-sm"
               onClick={() =>
                 setConfidentialite(!confidentialite) +
                 setPropos(false) +

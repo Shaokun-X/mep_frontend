@@ -229,7 +229,7 @@ export default function NameChoice({
         </button>
       </div>
 
-      <div className="phone_view">
+      <div className="phone_view d-flex mt-3">
         <button
           type="button"
           className="btn btn-link btn-sm mr-2 custom2"
