@@ -212,7 +212,6 @@ export default function NameChoice({
           type="button"
           className="btn btn-outline-success btn-lg mr-2 custom"
           onClick={onChooseYes}
-          value="1"
           disabled={!enableChoice}
         >
           Oui <i className="fas fa-heart" style={{ color: "green" }} />
@@ -221,7 +220,6 @@ export default function NameChoice({
           type="button"
           className="btn btn-outline-success btn-lg mr-2 custom"
           onClick={onChooseNo}
-          value="0"
           disabled={!enableChoice}
         >
           Non <i className="fas fa-times" style={{ color: "red" }} />
