@@ -19,7 +19,7 @@ export default function NameList({ likedNames, setList, list }) {
     <>
       <div className="List my-3">
         {likedNames.map((name) => (
-          <li key={name.id}>{name.name}</li>
+          <li key={name.id}>{name.name.charAt(0).toUpperCase() + name.name.slice(1).toLowerCase()}</li>
         ))}
       </div>
 

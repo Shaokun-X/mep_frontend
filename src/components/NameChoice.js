@@ -52,7 +52,6 @@ export default function NameChoice({
     const updatedLikedNames = likedNames.concat({ name: name, id: id });
     const likedNameIds = updatedLikedNames.map((e, i) => { return e.id });
     const proposedIds = idList.concat(id);
-    setLikedNames(updatedLikedNames);
     setidList(proposedIds);
 
     // preview* varables contains the ID of previous nextName
