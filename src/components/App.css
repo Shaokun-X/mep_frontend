@@ -15,18 +15,26 @@
     background-color: #ffffff;
     border-color: #C8FFE0;
     color: black;
-
 }
-.btn:hover {
+
+.btn:not([disabled]):hover {
     background-color: #C8FFE0; 
     color: #B4DBDC;
-  }
+}
 
 .btn-link{
-    border-color: #ffffff;
-} 
-.btn-link:hover{
+    border-color: transparent;
     background-color: transparent;
+} 
+
+.btn-link:hover {
+    border-color: transparent;
+    background-color: transparent !important;
+}
+
+.btn:disabled {
+    border-color: lightgray;
+    filter: grayscale(0.7);
 }
 
 .custom {
@@ -43,6 +51,7 @@
     top: 0;
     right: 50px;
     height: 80%;
+    z-index: -1;
 }
 
 .logo{

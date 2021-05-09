@@ -14,24 +14,57 @@ import Introduction from "./Introduction";
 import SexChoice from "./SexChoice";
 import NameChoice from "./NameChoice";
 
+
+// load the very first names from database.
+const veryFirstNames = { boy: {}, girl: {} }
+let xhr = new XMLHttpRequest();
+
+// `false` makes the request synchronous, so that users won't see the loading
+xhr.open('GET', 'https://www.monptinom.fr/index.php', false);
+xhr.send(null);
+if (xhr.status === 200) {
+  let data = JSON.parse(xhr.responseText);
+  veryFirstNames.boy = { id: data[0].id, name: data[0].nom };
+  veryFirstNames.nextBoyY = { id: data[1].id, name: data[1].nom };
+  veryFirstNames.nextBoyN = { id: data[2].id, name: data[2].nom };
+  veryFirstNames.girl = { id: data[3].id, name: data[3].nom };
+  veryFirstNames.nextGirlY = { id: data[4].id, name: data[4].nom };
+  veryFirstNames.nextGirlN = { id: data[5].id, name: data[5].nom };
+}
+
+
 function App() {
+  // sex, used in namechoice to request name, decided by sexchoice
   const [sexe, setSexe] = useState("NA");
+  // name, used only in namechoice
+  const [name, setName] = useState(null);
+  // NOTE: there is no need to use sperated two states to store both and name, this makes double renders every time update name
+  // liked names, used only in namechoice
+  const [likedNames, setLikedNames] = useState([]);
+  // id of current name, used only in namechoice
+  const [id, setId] = useState(null);
+  // all handled ids, used only in namechoice
+  // NOTE: should have used Set
+  const [idList, setidList] = useState([]);
+
+  // algo related, used only in namechoice
+  const [refus, setRefus] = useState(0);
+
+  // following are flags, determine which compnents to display
   const [list, setList] = useState(false);
   const [aide, setAide] = useState(false);
-  const [name, setName] = useState(null);
-  const [liked_names, setLikedNames] = useState([]);
-
-  const [id, setId] = useState(null);
-  const [idList, setidList] = useState([]);
-  const [idLike, setidLike] = useState([]);
-  const [iteration, setIteration] = useState(0);
-  const [refus, setRefus] = useState(0);
-  const [LikeLink, setLikeLink] = useState([]);
-
-
   const [propos, setPropos] = useState(false);
   const [legales, setLegales] = useState(false);
   const [confidentialite, setConfidentialite] = useState(false);
+
+  // enable flat of choice buttons
+  const [enableChoice, setEnableChoice] = useState(true);
+
+  // anytime the user restart the selection, the initial names would be ready at once.
+  // preloaded names, an array that contains two possible results
+  const [nextYesName, setNextYesName] = useState({ id: {}, name: {} });
+  const [nextNoName, setNextNoName] = useState({ id: {}, name: {} });
+
 
   return (
     <div className="container">
@@ -52,9 +85,14 @@ function App() {
             confidentialite={confidentialite}
           />
         ) : sexe === "NA" ? (
-          <SexChoice setSexe={setSexe} />
+          <SexChoice setSexe={setSexe} 
+          initialNames={veryFirstNames}
+          setName={setName}
+          setId={setId}
+          setNextYesName={setNextYesName}
+          setNextNoName={setNextNoName}/>
         ) : list === true ? (
-          <NameList setList={setList} list={list} liked_names={liked_names} />
+          <NameList setList={setList} list={list} likedNames={likedNames} />
         ) : aide === true ? (
           <Introduction setAide={setAide} aide={aide} />
         ) : (
@@ -67,20 +105,20 @@ function App() {
             setSexe={setSexe}
             list={list}
             setList={setList}
-            liked_names={liked_names}
+            likedNames={likedNames}
             setLikedNames={setLikedNames}
             refus={refus}
             setRefus={setRefus}
-            iteration={iteration}
-            setIteration={setIteration}
             id={id}
             setId={setId}
             idList={idList}
             setidList={setidList}
-            idLike={idLike}
-            setidLike={setidLike}
-            setLikeLink={setLikeLink}
-            LikeLink={LikeLink}
+            nextYesName={nextYesName}
+            setNextYesName={setNextYesName}
+            nextNoName={nextNoName}
+            setNextNoName={setNextNoName}
+            enableChoice={enableChoice}
+            setEnableChoice={setEnableChoice}
           />
         )}
 

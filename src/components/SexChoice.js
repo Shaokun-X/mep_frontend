@@ -1,9 +1,20 @@
 import React from "react";
 
-export default function SexChoice({ setSexe }) {
+export default function SexChoice({ setSexe, initialNames, setName, setId, setNextYesName, setNextNoName}) {
   //set the baby's name
   const handleChange = (event) => {
     setSexe(event.target.value);
+    if (event.target.value === 'm') {
+      setName(initialNames.boy.name);
+      setId(initialNames.boy.id)
+      setNextYesName(initialNames.nextBoyY);
+      setNextNoName(initialNames.nextBoyN);
+    } else {
+      setName(initialNames.girl.name);
+      setId(initialNames.girl.id)
+      setNextYesName(initialNames.nextGirlY);
+      setNextNoName(initialNames.nextGirlN);
+    }
   };
 
   return (

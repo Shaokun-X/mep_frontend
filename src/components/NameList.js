@@ -9,7 +9,7 @@ import {
   WhatsappIcon,
 } from "react-share";
 
-export default function NameList({ liked_names, setList, list }) {
+export default function NameList({ likedNames, setList, list }) {
   //go back to previous state
   const Back = () => {
     setList(!list);
@@ -17,8 +17,8 @@ export default function NameList({ liked_names, setList, list }) {
 
   return (
     <>
-      <div className="List">
-        {liked_names.map((name) => (
+      <div className="List my-3">
+        {likedNames.map((name) => (
           <li key={name.id}>{name.name}</li>
         ))}
       </div>
@@ -26,10 +26,10 @@ export default function NameList({ liked_names, setList, list }) {
       <div className="d-flex justify-content-center mb-2">
         <FacebookShareButton
           className="mr-2"
-          url={"http://monptinom.fr"}
+          url={"https://www.monptinom.fr"}
           quote={
             "Alors vous en pensez quoi de mes choix de prénom ? Merci monptinom.fr pour votre aide : \n" +
-            liked_names.map((name) => name.name)
+            likedNames.map((name) => name.name)
           }
         >
           <FacebookIcon size={46} round />
@@ -37,10 +37,10 @@ export default function NameList({ liked_names, setList, list }) {
 
         <TwitterShareButton
           className="mr-2"
-          url={"http://monptinom.fr"}
+          url={"https://www.monptinom.fr"}
           quote={
             "Alors vous en pensez quoi de mes choix de prénom ? Merci monptinom.fr pour votre aide : \n" +
-            liked_names.map((name) => name.name)
+            likedNames.map((name) => name.name)
           }
         >
           <TwitterIcon size={46} round />
@@ -48,10 +48,10 @@ export default function NameList({ liked_names, setList, list }) {
 
         <WhatsappShareButton
           className="mr-2"
-          url={"http://monptinom.fr"}
+          url={"https://www.monptinom.fr"}
           quote={
             "Alors vous en pensez quoi de mes choix de prénom ? Merci monptinom.fr pour votre aide : \n" +
-            liked_names.map((name) => name.name)
+            likedNames.map((name) => name.name)
           }
         >
           <WhatsappIcon size={46} round />
