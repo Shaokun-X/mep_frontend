@@ -77,7 +77,6 @@ export default function NameChoice({
       // recommendation logic, preload the next name
       preload(previewProposedIds, previewYesLikedNameIds, previewNoLikedNameIds, previewRefus);
     }
-
     document.activeElement.blur();
   };
 
@@ -205,7 +204,7 @@ export default function NameChoice({
   return (
     <>
 
-      <h1> {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()} </h1>
+      <h1 className="text-center"> {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()} </h1>
 
       <div className="d-flex justify-content-center">
         <button

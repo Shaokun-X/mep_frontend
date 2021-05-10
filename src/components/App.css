@@ -88,6 +88,12 @@
     margin-bottom: 10%;
 }
 
+.container--full {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 .navbarText button {
     color: rgb(175, 175, 175);
 }

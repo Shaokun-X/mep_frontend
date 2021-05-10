@@ -67,7 +67,7 @@ function App() {
 
 
   return (
-    <div className="container">
+    <div className="container container--full">
       <div className="content">
         <img
           src={Logo}
@@ -125,7 +125,7 @@ function App() {
         <img className="ballon" src={Ballon} alt="Ballon" />
       </div>
 
-      <nav className="navbar navbar-expand-lg fixed-bottom navbar-light ">
+      <nav className="navbar navbar-expand-lg mt-auto navbar-light ">
         <a className="navbar-brand " href="/">
           <img className="logo" src={Logo_bas} alt="Logo" />
         </a>
@@ -152,7 +152,7 @@ function App() {
             <li>MXCDATA</li>
           </ul>
 
-          <span className="navbarText d-flex justify-content-around mt-sm-4">
+          <span className="navbarText d-flex justify-content-around mt-3 mt-lg-0">
             <button
               type="button"
               className="btn btn-link btn-sm"
