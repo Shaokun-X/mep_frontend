@@ -102,6 +102,9 @@
     font-size: x-small;
 }
 
+.navbar-nav li {
+    white-space: nowrap;
+}
 
 .content{
     display: flex;
@@ -129,7 +132,7 @@
     flex-direction: column;
 } */
 
-.navbar-toggle {
+.navbar-toggler {
     transform: scale(.8);
 }
 

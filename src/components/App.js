@@ -152,8 +152,7 @@ function App() {
             style={{ fontSize: "12px"}}
           >
             <li>Copyright &#169; 2021</li>
-            <li>Powered by</li>
-            <li>MXCDATA</li>
+            <li>Powered by MXCDATA</li>
           </ul>
 
           <span className="m-top-border d-flex justify-content-around mt-3 mt-lg-0">
