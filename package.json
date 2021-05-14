@@ -10,8 +10,10 @@
     "qs": "^6.10.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-pure-lifecycle": "^3.0.0",
     "react-scripts": "4.0.3",
     "react-share": "^4.4.0",
+    "smooth-scrollbar": "^8.6.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

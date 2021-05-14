@@ -37,9 +37,17 @@
     filter: grayscale(0.7);
 }
 
-.custom {
+.btn.custom {
     margin-top: 10px;
     width: 100px !important;
+}
+
+@media (hover: none) {
+    .btn.custom:hover {
+        background-color: transparent;
+        color: black;
+        border-color: #C8FFE0;
+    }
 }
 
 
@@ -65,14 +73,29 @@
 }
 
 .List{
+    max-height: 180px;
+    overflow-x: scroll;
+    width: 75%;
+}
+@media (min-width: 992px) {     
+.List{
+    width: 35%;
+}
+}
+
+#nameListScroll > .scroll-content {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100px;
-    width: 400px; 
-    overflow-y: scroll;
-    overflow-x: hidden;
+    flex-wrap: wrap;
+    height: 180px;
+    column-gap: 20%;
+    padding-bottom: 10px;
+}
+
+#nameListScroll .scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .25);
 }
 
 .ListInstructions{
@@ -83,9 +106,10 @@
 .content{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: space-between; */
     align-items: center;
-    margin-bottom: 10%;
+    /* margin-bottom: 10%; */
+    height: 100%;
 }
 
 .container--full {
@@ -94,14 +118,27 @@
     height: 100vh;
 }
 
-.navbarText button {
+
+#navbarText button {
     color: rgb(175, 175, 175);
 }
-.navbarText {
+
+/* #navbarText {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+} */
+
+.navbar-toggle {
+    transform: scale(.8);
+}
+
+.m-top-border {
     border-top: dashed lightgray 1px;
+    /* width: 100%; */
 }
 @media (min-width: 992px) {     
-    .navbarText{
+    .m-top-border {
         border: none;
     }
 }

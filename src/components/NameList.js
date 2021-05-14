@@ -1,4 +1,6 @@
 import React from "react";
+import Scrollbar from 'smooth-scrollbar';
+import lifecycle from 'react-pure-lifecycle';
 
 import {
   FacebookShareButton,
@@ -9,7 +11,23 @@ import {
   WhatsappIcon,
 } from "react-share";
 
-export default function NameList({ likedNames, setList, list }) {
+// create your lifecycle methods
+const componentDidMount = (props) => {
+  console.log('I mounted! Here are my props: ', props);
+};
+
+// make them properties on a standard object
+const methods = {
+  componentDidMount(props) {
+    Scrollbar.init(document.getElementById("nameListScroll"), {
+      alwaysShowTracks: true
+
+    });
+  }
+};
+
+// component
+const NameList = ({ likedNames, setList, list }) => {
   //go back to previous state
   const Back = () => {
     setList(!list);
@@ -17,9 +35,9 @@ export default function NameList({ likedNames, setList, list }) {
 
   return (
     <>
-      <div className="List my-3">
+      <div className="List mt-3 mb-auto pb-4" id="nameListScroll">
         {likedNames.map((name) => (
-          <li key={name.id}>{name.name.charAt(0).toUpperCase() + name.name.slice(1).toLowerCase()}</li>
+          <div key={name.id}>{name.name.charAt(0).toUpperCase() + name.name.slice(1).toLowerCase()}</div>
         ))}
       </div>
 
@@ -32,7 +50,7 @@ export default function NameList({ likedNames, setList, list }) {
             likedNames.map((name) => name.name)
           }
         >
-          <FacebookIcon size={46} round />
+          <FacebookIcon size={36} round />
         </FacebookShareButton>
 
         <TwitterShareButton
@@ -43,7 +61,7 @@ export default function NameList({ likedNames, setList, list }) {
             likedNames.map((name) => name.name)
           }
         >
-          <TwitterIcon size={46} round />
+          <TwitterIcon size={36} round />
         </TwitterShareButton>
 
         <WhatsappShareButton
@@ -54,7 +72,7 @@ export default function NameList({ likedNames, setList, list }) {
             likedNames.map((name) => name.name)
           }
         >
-          <WhatsappIcon size={46} round />
+          <WhatsappIcon size={36} round />
         </WhatsappShareButton>
       </div>
 
@@ -67,4 +85,6 @@ export default function NameList({ likedNames, setList, list }) {
       </div>
     </>
   );
-}
+};
+
+export default lifecycle(methods)(NameList);

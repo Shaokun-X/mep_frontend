@@ -128,7 +128,8 @@ function App() {
         <img className="ballon" src={Ballon} alt="Ballon" />
       </div>
 
-      <nav className="navbar navbar-expand-lg mt-auto navbar-light ">
+      <nav className="navbar navbar-expand-lg mt-auto navbar-light pb-0">
+        
         <a className="navbar-brand " href="/">
           <img className="logo" src={Logo_bas} alt="Logo" />
         </a>
@@ -147,15 +148,15 @@ function App() {
 
         <div className="collapse navbar-collapse" id="navbarText">
           <ul
-            className="navbar-nav d-flex mx-auto flex-row flex-md-column justify-content-around"
-            style={{ fontSize: "12px", alignItems: "center" }}
+            className="navbar-nav d-flex mx-auto flex-row flex-md-column justify-content-around align-items-center"
+            style={{ fontSize: "12px"}}
           >
             <li>Copyright &#169; 2021</li>
             <li>Powered by</li>
             <li>MXCDATA</li>
           </ul>
 
-          <span className="navbarText d-flex justify-content-around mt-3 mt-lg-0">
+          <span className="m-top-border d-flex justify-content-around mt-3 mt-lg-0">
             <button
               type="button"
               className="btn btn-link btn-sm"
