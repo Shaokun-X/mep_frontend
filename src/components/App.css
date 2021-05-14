@@ -42,14 +42,19 @@
     width: 100px !important;
 }
 
-@media (hover: none) {
-    .btn.custom:hover {
-        background-color: transparent;
-        color: black;
-        border-color: #C8FFE0;
-    }
+.btn.custom:hover {
+    background-color: transparent;
+    color: black;
+    border-color: #C8FFE0;
 }
 
+@media (hover: hover) and (min-width: 576px) {
+    .btn.custom:hover {
+        background-color: #C8FFE0;
+        color: #B4DBDC;
+        border-color: #28A745;
+    }
+}
 
 .ballon{
     position: absolute;
@@ -73,14 +78,14 @@
 }
 
 .List{
-    max-height: 180px;
+    max-height: 30vh;
     overflow-x: scroll;
     width: 75%;
 }
 @media (min-width: 992px) {     
-.List{
-    width: 35%;
-}
+    .List{
+        width: 35%;
+    }
 }
 
 #nameListScroll > .scroll-content {
