@@ -15,6 +15,8 @@ export default function NameChoice({
   setLikedNames,
   refus,
   setRefus,
+  iter,
+  setIter,
   id,
   setId,
   idList,
@@ -34,9 +36,8 @@ export default function NameChoice({
     setId(nextNoName.id);
     setidList([]);
     setRefus(0);
+    setIter(0);
     setEnableChoice(true);
-    // let randomIndex = Math.floor(Math.random() * idList.length);
-    // preload([idList[randomIndex]], [idList[randomIndex]], [-1], 0);
   };
 
   // change to list name component
@@ -138,7 +139,7 @@ export default function NameChoice({
     } else if (previewRefus <= 15) {
       choiceno(previewProposedIds, 'aleaTop.php', 50, false);
     } else {
-      choiceno(previewProposedIds, 'randomname.php', 1, false);
+      choiceno(previewProposedIds, 'random.php', 1, false);
     }
   };
 

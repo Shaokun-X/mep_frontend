@@ -49,6 +49,7 @@ function App() {
 
   // algo related, used only in namechoice
   const [refus, setRefus] = useState(0);
+  const [iter, setIter] = useState(0);
 
   // following are flags, determine which compnents to display
   const [list, setList] = useState(false);
@@ -109,6 +110,8 @@ function App() {
             setLikedNames={setLikedNames}
             refus={refus}
             setRefus={setRefus}
+            iter={iter}
+            setIter={setIter}
             id={id}
             setId={setId}
             idList={idList}
