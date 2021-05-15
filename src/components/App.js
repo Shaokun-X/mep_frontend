@@ -66,6 +66,8 @@ function App() {
   const [nextYesName, setNextYesName] = useState({ id: {}, name: {} });
   const [nextNoName, setNextNoName] = useState({ id: {}, name: {} });
 
+  const [initialNames, setInitialNames] = useState(veryFirstNames);
+
 
   return (
     <div className="container container--full">
@@ -87,7 +89,7 @@ function App() {
           />
         ) : sexe === "NA" ? (
           <SexChoice setSexe={setSexe} 
-          initialNames={veryFirstNames}
+          initialNames={initialNames}
           setName={setName}
           setId={setId}
           setNextYesName={setNextYesName}
@@ -122,6 +124,7 @@ function App() {
             setNextNoName={setNextNoName}
             enableChoice={enableChoice}
             setEnableChoice={setEnableChoice}
+            setInitialNames={setInitialNames}
           />
         )}
 

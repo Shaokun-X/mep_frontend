@@ -27,13 +27,18 @@ export default function NameChoice({
   setNextNoName,
   enableChoice,
   setEnableChoice,
+  setInitialNames
 }) {
   // Reset all parameters
   const Reset = () => {
+    // prepare to restart, load the very first names
+    initial();
+
     setSexe("NA");
     setLikedNames([]);
-    setName(nextNoName.name);
-    setId(nextNoName.id);
+    // name and id would set at sex choose stage
+    setName("");
+    setId(null);
     setidList([]);
     setRefus(0);
     setIter(0);
@@ -50,33 +55,24 @@ export default function NameChoice({
   const onChooseNo = () => {
 
     // update of states is asyncronous, so we store them locally then pass them to API request methods
-    const updatedLikedNames = likedNames.concat({ name: name, id: id });
-    const likedNameIds = updatedLikedNames.map((e, i) => { return e.id });
+    const likedIds = likedNames.map((e, i) => { return e.id });
     const proposedIds = idList.concat(id);
+    const updatedRefus = refus + 1;
+    // if iter is greater than 0, means that there are liked names
+    const updatedIter = (iter > 0) ? iter + 1 : 0;
     setidList(proposedIds);
 
-    // preview* varables contains the ID of previous nextName
-    let previewProposedIds = [...proposedIds];
-    previewProposedIds.push(nextNoName.id);
-    let previewNoLikedNameIds = [...likedNameIds];
-    let previewYesLikedNameIds = [...likedNameIds];
-    previewYesLikedNameIds.push(nextYesName.id);
-    let previewRefus = refus + 2;
-    
-    setRefus(refus + 1);
     // replace display name with preloaded next name
     setName(nextNoName.name);
     setId(nextNoName.id);
+    setRefus(refus + 1);
 
     // if the id of next name is NaN, that means all names in DB has been viewed
     if (isNaN(nextYesName.id) || isNaN(nextNoName.id)) {
       setEnableChoice(false);
-      // prepare to restart
-      let randomIndex = Math.floor(Math.random() * idList.length);
-      preload([idList[randomIndex]], [idList[randomIndex]], [], 0);
     } else {
       // recommendation logic, preload the next name
-      preload(previewProposedIds, previewYesLikedNameIds, previewNoLikedNameIds, previewRefus);
+      preload(proposedIds, likedIds, nextNoName.id, updatedRefus, updatedIter);
     }
     document.activeElement.blur();
   };
@@ -84,123 +80,81 @@ export default function NameChoice({
   const onChooseYes = () => {
     // update of states is asyncronous, so we store them locally then pass them to API request methods
     const updatedLikedNames = likedNames.concat({ name: name, id: id });
-    const likedNameIds = updatedLikedNames.map((e, i) => { return e.id });
+    const updatedLikedIds = updatedLikedNames.map((e, i) => { return e.id });
+    const updatedIter = iter + 1;
     const proposedIds = idList.concat(id);
     setLikedNames(updatedLikedNames);
     setidList(proposedIds);
 
-    
-    // preview* varables contains the ID of previous nextName
-    let previewProposedIds = [...proposedIds];
-    previewProposedIds.push(nextYesName.id);
-    let previewNoLikedNameIds = [...likedNameIds];
-    let previewYesLikedNameIds = [...likedNameIds];
-    previewYesLikedNameIds.push(nextYesName.id);
-    let previewRefus = refus + 1;
-
     // replace display name with preloaded next name
     setName(nextYesName.name);
     setId(nextYesName.id);
+    setIter(iter + 1);
 
-    // if the id of next name is NaN, that means all names in DB has been viewed
+    // if the id of next name is NaN, that means all names in DB have been viewed
     if (isNaN(nextYesName.id) || isNaN(nextNoName.id)) {
       setEnableChoice(false);
-      // prepare to restart
-      let randomIndex = Math.floor(Math.random() * idList.length);
-      preload([idList[randomIndex]], [idList[randomIndex]], [], 0);
     } else {
       // recommendation logic, preload the next name
-      preload(previewProposedIds, previewYesLikedNameIds, previewNoLikedNameIds, previewRefus);
+      preload(proposedIds, updatedLikedIds, nextYesName.id, refus, updatedIter);
     }
 
     // when there is new liked name, persistend the relation
-    let updateIdLike = updatedLikedNames.map((e, i) => { return e.id });
-    // console.log("persistend")
-    // console.log(updateIdLike)
-    axios.post("https://www.monptinom.fr/persist.php", updateIdLike).then((res) => {
+    axios.post("https://www.monptinom.fr/persist.php", updatedLikedIds).then((res) => {
       // console.log(res.config.data);
     });
     document.activeElement.blur();
   };
 
-  const preload = (previewProposedIds, previewYesLikedNameIds, previewNoLikedNameIds, previewRefus) => {
-    // YES CASE
-    // the correlation between proposed names doesn't effect the next most related name
-    // so it is safe to preload the "yes" next name without persistence
-    maxname(previewProposedIds, previewYesLikedNameIds, true);
-
-    // NO CASE
-    if (previewRefus <= 5) {
-      maxname(previewProposedIds, previewNoLikedNameIds, false);
-    } else if (previewRefus <= 7) {
-      choiceno(previewProposedIds, 'top.php', 25, false);
-    } else if (previewRefus <= 10) {
-      choiceno(previewProposedIds, 'top.php', 100, false);
-    } else if (previewRefus <= 15) {
-      choiceno(previewProposedIds, 'aleaTop.php', 50, false);
-    } else {
-      choiceno(previewProposedIds, 'random.php', 1, false);
-    }
-  };
-
-  const maxname = (proposedIds, likedNameIds, isYes) => {
-    // console.log("maxname")
+  const preload = (proposedIds, likedIds, currentId, refu, iter) => {
     axios
-      .get(`https://www.monptinom.fr/max.php`, {
+      .get(`https://www.monptinom.fr/preload.php`, {
         params: {
-          ids: likedNameIds,
-          excludes: proposedIds,
-          sexe: sexe
+          like: likedIds,
+          prop: proposedIds,
+          sex: sexe,
+          refu: refu,
+          iter: iter,
+          curr: currentId
         },
         paramsSerializer: function (params) {
           return qs.stringify(params, { arrayFormat: "brackets" });
         },
       })
       .then((res) => {
-        if (res.data !== undefined && res.data.length > 0) {
-
-          // console.log("maxname return " + res.data[0].nom + " id " + res.data[0].id)
-          if (isYes) {
-            setNextYesName({ id: res.data[0].id, name: res.data[0].nom })
+        if (res.data === undefined) {
+          setNextYesName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
+          setNextNoName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
+        } else {
+          if ( res.data.Y !== undefined ) {
+            setNextYesName({ id: res.data.Y.id, name: res.data.Y.nom });
           } else {
-            setNextNoName({ id: res.data[0].id, name: res.data[0].nom })
+            setNextYesName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
           }
-
-        }
-        else {
-          setNextYesName({ id: NaN, name: "Vous avez déjà vu tous les noms !" })
-          setNextNoName({ id: NaN, name: "Vous avez déjà vu tous les noms !" })
+          if ( res.data.N !== undefined ) {
+            setNextNoName({ id: res.data.N.id, name: res.data.N.nom });
+          } else {
+            setNextNoName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
+          }
         }
       });
   };
 
-  const choiceno = (proposedIds, endpoint, size, isYes) => {
+  const initial = () => {
     axios
-      .get(`https://www.monptinom.fr/${endpoint}`, {
-        params: {
-          sexe: sexe,
-          num: size,
-          excludes: proposedIds
-        },
-        paramsSerializer: function (params) {
-          return qs.stringify(params, { arrayFormat: "brackets" });
-        },
-      })
+      .get(`https://www.monptinom.fr/index.php`)
       .then((res) => {
-        if (res.data !== undefined && res.data.length > 0) {
-          if (isYes) {
-            setNextYesName({ id: res.data[0].id, name: res.data[0].nom })
-          } else {
-            setNextNoName({ id: res.data[0].id, name: res.data[0].nom })
-          }
-        }
-        else {
-          setNextYesName({ id: NaN, name: "Vous avez déjà vu tous les noms !" })
-          setNextNoName({ id: NaN, name: "Vous avez déjà vu tous les noms !" })
-        }
+        let data = res.data;
+        let initialNames = {};
+        initialNames.boy = { id: data[0].id, name: data[0].nom };
+        initialNames.nextBoyY = { id: data[1].id, name: data[1].nom };
+        initialNames.nextBoyN = { id: data[2].id, name: data[2].nom };
+        initialNames.girl = { id: data[3].id, name: data[3].nom };
+        initialNames.nextGirlY = { id: data[4].id, name: data[4].nom };
+        initialNames.nextGirlN = { id: data[5].id, name: data[5].nom };
+        setInitialNames(initialNames);
       });
-  };
-
+  }
 
   return (
     <>
