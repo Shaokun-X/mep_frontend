@@ -78,31 +78,33 @@ export default function NameChoice({
   };
 
   const onChooseYes = () => {
-    // update of states is asyncronous, so we store them locally then pass them to API request methods
-    const updatedLikedNames = likedNames.concat({ name: name, id: id });
-    const updatedLikedIds = updatedLikedNames.map((e, i) => { return e.id });
-    const updatedIter = iter + 1;
-    const proposedIds = idList.concat(id);
-    setLikedNames(updatedLikedNames);
-    setidList(proposedIds);
+    if (id !== nextYesName.id) {
+      // update of states is asyncronous, so we store them locally then pass them to API request methods
+      const updatedLikedNames = likedNames.concat({ name: name, id: id });
+      const updatedLikedIds = updatedLikedNames.map((e, i) => { return e.id });
+      const updatedIter = iter + 1;
+      const proposedIds = idList.concat(id);
+      setLikedNames(updatedLikedNames);
+      setidList(proposedIds);
 
-    // replace display name with preloaded next name
-    setName(nextYesName.name);
-    setId(nextYesName.id);
-    setIter(iter + 1);
+      // replace display name with preloaded next name
+      setName(nextYesName.name);
+      setId(nextYesName.id);
+      setIter(iter + 1);
 
-    // if the id of next name is NaN, that means all names in DB have been viewed
-    if (isNaN(nextYesName.id) || isNaN(nextNoName.id)) {
-      setEnableChoice(false);
-    } else {
-      // recommendation logic, preload the next name
-      preload(proposedIds, updatedLikedIds, nextYesName.id, refus, updatedIter);
+      // if the id of next name is NaN, that means all names in DB have been viewed
+      if (isNaN(nextYesName.id) || isNaN(nextNoName.id)) {
+        setEnableChoice(false);
+      } else {
+        // recommendation logic, preload the next name
+        preload(proposedIds, updatedLikedIds, nextYesName.id, refus, updatedIter);
+      }
+
+      // when there is new liked name, persistend the relation
+      axios.post("https://www.monptinom.fr/persist.php", updatedLikedIds).then((res) => {
+        console.log(res.config.data);
+      });
     }
-
-    // when there is new liked name, persistend the relation
-    axios.post("https://www.monptinom.fr/persist.php", updatedLikedIds).then((res) => {
-      // console.log(res.config.data);
-    });
     document.activeElement.blur();
   };
 
@@ -126,12 +128,12 @@ export default function NameChoice({
           setNextYesName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
           setNextNoName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
         } else {
-          if ( res.data.Y !== undefined ) {
+          if (res.data.Y !== undefined) {
             setNextYesName({ id: res.data.Y.id, name: res.data.Y.nom });
           } else {
             setNextYesName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
           }
-          if ( res.data.N !== undefined ) {
+          if (res.data.N !== undefined) {
             setNextNoName({ id: res.data.N.id, name: res.data.N.nom });
           } else {
             setNextNoName({ id: NaN, name: "Vous avez déjà vu tous les noms !" });
