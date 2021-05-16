@@ -102,7 +102,7 @@ export default function NameChoice({
 
       // when there is new liked name, persistend the relation
       axios.post("https://www.monptinom.fr/persist.php", updatedLikedIds).then((res) => {
-        console.log(res.config.data);
+        // console.log(res.config.data);
       });
     }
     document.activeElement.blur();
